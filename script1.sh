@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Requesting just the / directory, taking tail 1 to get rid of header line 
-#using trim to get rid of repeating spaces to make it suiteable for cut
+#using trim to get rid of repeating spaces to make it suitable for cut
 #cutting on spaces and choosing the 6 value which is the space used
 #remove the % sign with nothing using sed, so we can use the value as an int
 SPACEUSED="$(df -hT / | tail -1 | tr -s ' '  | cut -d ' ' -f6 | sed s/%//)"
