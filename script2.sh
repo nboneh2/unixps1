@@ -8,6 +8,23 @@ FREE="$(free -m | grep "Mem" | tr -s ' ' | cut -d ' ' -f4)"
 echo "CPU Load Average:$LOAD      Free RAM: $FREE MB" 
 echo $'\n'
 echo "NETWORK CONNECTIONS -----------------------------------"
+
+TRIM_FILE="$(cat /proc/net/dev | tr -s ' ')"
+LO_RECEIVE="$( grep -o 'lo.*' <<< $TRIM_FILE | cut -d " " -f2)"
+LO_TRANSMIT="$( grep -o 'lo.*' <<< $TRIM_FILE | cut -d " " -f3)"
+ENP_RECEIVE="$(grep -o 'enp0s3.*' <<< $TRIM_FILE | cut -d " " -f2)"
+ENP_TRANSMIT="$(grep -o 'enp0s3.*' <<< $TRIM_FILE | cut -d " " -f3)" 
+
+echo "lo Bytes Received: $LO_RECEIVE       Bytes Transmitted: $LO_TRANSMIT"
+echo "enp0s3 Bytes Received: $ENP_RECEIVE      Bytes Transmitted: $ENP_TRANSMIT"
+
+if ping -c 1 google.com &> /dev/null
+then
+	echo "Internet Connectivity: Yes"	
+else
+	echo "Internet Connectivity: No"
+fi
+
 echo $'\n'
 echo "ACCOUNT INFORMATION -----------------------------------"
 
